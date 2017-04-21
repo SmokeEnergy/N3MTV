@@ -5,6 +5,7 @@ PreParseResources:
 
 AutoStartResources:
     - assets
+#    - carte
 #    - scoreboard
     - es_freeroam
     - lscustoms
@@ -17,7 +18,6 @@ AutoStartResources:
     - frfuel
     - pv-voip
     - essentialmode
-    - carwash
     - MissionText
     - TruckerJob
     - msq-directions-hud
@@ -29,18 +29,19 @@ AutoStartResources:
     - es_taxi
     - carwash
     - pv-tow
-#    - LSPDFR
     - jobs
     - paycheck
     - busdriver
-    - police
     - PoliceGarage
     - soljian_hu
     - banking
     - Garages
     - carhud
-#    - carte
     - coordsaver
+#    - es_customization
+    - es_miscstores
+#    - es_robberies
+#    - es_roleplay
 
 # do change
 RconPassword: monpasse

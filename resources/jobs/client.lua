@@ -1,7 +1,7 @@
 ---------------------------------- VAR ----------------------------------
 
 local changeYourJob = {
-  {name="Pole Emploi", colour=15, id=351, x=-266.94, y=-960.744, z=31.2231},
+  {name="Work'in Santos", colour=15, id=351, x=-266.94, y=-960.744, z=31.2231},
 }
 
 local jobs = {
