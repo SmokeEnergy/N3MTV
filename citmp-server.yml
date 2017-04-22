@@ -27,7 +27,6 @@ AutoStartResources:
     - es_admin
     - es_weashop
     - es_taxi
-    - carwash
     - pv-tow
     - jobs
     - paycheck
