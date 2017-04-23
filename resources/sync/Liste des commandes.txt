@@ -1,0 +1,25 @@
+
+
+    /weather [HELP | EXTRASUNNY | CLEAR | CLOUDS | OVERCAST | SMOG | FOGGY | RAIN | THUNDER | CLEARING | NEUTRAL | SNOW | BLIZZARD | XMAS]
+
+    /wind [speed 0.0 - 12.0] [direction 0.0 - 360.0]
+    Applies wind, making trees move and adding an ambient wind sound. speed is in Beauforts, a number between 0.0 and 12.0. direction is in degrees, where 90.0 is west and 270.0 is east.
+
+    /time [HELP | NIGHT | MORNING | NOON | EVENING]
+
+    /time hours minutes seconds
+
+    /freezetime [1 | 0]
+
+    /timerate [DAY | NIGHT | BOTH] [0.1 - 10.0]
+    This changes the rate at which time is passing. 0.1 is ten times as slow, 10.0 is ten times as fast. 1.0 is default. Day is defined to start at 05:30 and night is defined to start at 23:00.
+
+    /blackout [1 | 0]
+
+    /traffic [0.0 - 1.0]
+
+    /crowd [0.0 - 1.0]
+
+    /playerlist
+
+    /kick [Player ID] [Reason]

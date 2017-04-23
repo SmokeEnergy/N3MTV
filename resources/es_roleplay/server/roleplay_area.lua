@@ -11,7 +11,6 @@ RegisterServerEvent('es_roleplay:spawn')
 AddEventHandler('es_roleplay:spawn', function()
 	if(not spawned[source])then
 		spawned[source] = true
-		uSettings.firstSpawned(source)
 
 		TriggerEvent("es:getPlayerFromId", source, function(user)
 			if(player_jobs[user.identifier])then
@@ -148,14 +147,13 @@ local sync_types = {
 	{ time = 14, weather = "", name = "Afternoon" },
 	{ time = 16, weather = "", name = "Afternoon" },
 	{ time = 18, weather = "", name = "Evening" },
-	{ time = 20, weather = "", name = "Evening" }, 
+	{ time = 20, weather = "", name = "Evening" },
 }
 
 local current_sync = 3
 
 function doSync()
 	SetTimeout(2000, function()
-		TriggerClientEvent('chatMessage', -1, 'SYNC', {255, 0, 0}, 'Time: ^*^2' .. sync_types[current_sync].name .. '^0(^2^*' .. sync_types[current_sync].time .. '^r^0), Weather: ^2^*' .. sync_types[current_sync].weather)
 		TriggerClientEvent('es_roleplay:sync', -1, sync_types[current_sync])
 		SetTimeout(1200000, function()
 			current_sync = current_sync + 1
@@ -171,7 +169,6 @@ doSync()
 AddEventHandler('playerSpawn', function()
 	SetTimeout(2000, function()
 		TriggerClientEvent('es_roleplay:sync', -1, sync_types[current_sync])
-		TriggerClientEvent('chatMessage', -1, 'SYNC', {255, 0, 0}, 'Time: ^*^2' .. sync_types[current_sync].name .. '^0(^2^*' .. sync_types[current_sync].time .. '^r^0), Weather: ^2^*' .. sync_types[current_sync].weather)
 	end)
 end)
 

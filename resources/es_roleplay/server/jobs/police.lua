@@ -14,7 +14,7 @@ TriggerEvent('es:addAdminCommand', 'unjail', 3, function(source, args, user)
 		if(prisoners[args[2]])then
 			TriggerClientEvent('es_roleplay:teleportPlayer', tonumber(args[2]), prison.exit.x, prison.exit.y, prison.exit.z)
 			TriggerClientEvent('es_roleplay:freezePlayer', tonumber(args[2]), false)
-			TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 a été relaché.")
+			TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 has been ^4admin^0 released.")
 			prisoners[args[2]] = nil
 		else
 			TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Player not in prison.")
@@ -42,7 +42,7 @@ TriggerEvent('es:addAdminCommand', 'ajail', 3, function(source, args, user)
 					TriggerClientEvent('es_roleplay:teleportPlayer', tonumber(args[2]), prison.cam.x, prison.cam.y, prison.cam.z)
 					TriggerClientEvent('es_roleplay:freezePlayer', tonumber(args[2]), true)
 					TriggerClientEvent('es_roleplay:cuff', -1, false, tonumber(args[2]))
-					TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 a été envoyé en prison pendant ^2" .. tonumber(args[3]) .. " ^0minute(s). By ^2" .. GetPlayerName(source))
+					TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 has been ^4force^0 jailed for ^2" .. tonumber(args[3]) .. " ^0minute(s). By ^2" .. GetPlayerName(source))
 				end)
 			else
 				TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Incorrect player ID")
@@ -97,17 +97,17 @@ TriggerEvent('es:addCommand', 'jail', function(source, args, user)
 									TriggerClientEvent('es_roleplay:teleportPlayer', tonumber(args[2]), prison.cam.x, prison.cam.y, prison.cam.z)
 									TriggerClientEvent('es_roleplay:freezePlayer', tonumber(args[2]), true)
 									TriggerClientEvent('es_roleplay:cuff', -1, false, tonumber(args[2]))
-									TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 a été envoyé en prison pendant ^2" .. tonumber(args[3]) .. " ^0minute(s). By ^2" .. GetPlayerName(source))
+									TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 has been put in jail for ^2" .. tonumber(args[3]) .. " ^0minute(s). By ^2" .. GetPlayerName(source))
 
 									SetTimeout(time, function()
 										if(prisoners[args[2]])then
 											TriggerClientEvent('es_roleplay:teleportPlayer', tonumber(args[2]), prison.exit.x, prison.exit.y, prison.exit.z)
 											TriggerClientEvent('es_roleplay:freezePlayer', tonumber(args[2]), false)
-											TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 a été relaché.")
+											TriggerClientEvent('chatMessage', -1, "JAIL", {255, 140, 0}, "Player ^2" .. GetPlayerName(args[2]) .. "^0 has been released.")
 										end
 									end)
 							else
-								TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "La cible doit d'abbord être menotté.")
+								TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Target requires to be cuffed.")
 							end
 
 							return
@@ -115,17 +115,17 @@ TriggerEvent('es:addCommand', 'jail', function(source, args, user)
 
 						end
 					end
-					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "La cible doi être prés d'une zone de transfer.")
+					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Target not close enough to prison.")
 					end)
 				else
 					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Incorrect player ID")
 				end
 			end
 		else
-			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous devez être policier.")
+			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You need to be police.")
 		end
 	else
-		TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous devez être policier.")
+		TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You need to be police.")
 	end
 end)
 
@@ -143,7 +143,7 @@ TriggerEvent('es:addCommand', 'cuff', function(source, args, user)
 				if(GetPlayerName(tonumber(args[2])))then
 					TriggerEvent('es:getPlayerFromId', tonumber(args[2]), function(target)
 						if(get3DDistance(target.coords.x, target.coords.y, target.coords.z, user.coords.x, user.coords.y, user.coords.z) > 10.0)then
-							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Rapprochez vous du suspect.")
+							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Please get closer to suspect.")
 							return
 						end
 
@@ -171,10 +171,10 @@ TriggerEvent('es:addCommand', 'cuff', function(source, args, user)
 				end
 			end
 		else
-			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous devez être policier.")
+			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You need to be police.")
 		end
 	else
-		TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous devez être policier.")
+		TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You need to be police.")
 	end
 end)
 
@@ -193,7 +193,7 @@ TriggerEvent('es:addCommand', 'unseat', function(source, args, user)
 				if(GetPlayerName(tonumber(args[2])))then
 					TriggerEvent('es:getPlayerFromId', tonumber(args[2]), function(target)
 						if(get3DDistance(target.coords.x, target.coords.y, target.coords.z, user.coords.x, user.coords.y, user.coords.z) > 10.0)then
-							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Rapprochez vous du suspect.")
+							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Please get closer to suspect.")
 							return
 						end
 

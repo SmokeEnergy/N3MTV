@@ -118,9 +118,9 @@ TriggerEvent('es:addCommand', 'job', function(source, args, user)
 		end
 
 		if(player_jobs[user['identifier']])then
-			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Your current job is: ^2" .. job .. " ^0(^2" .. player_jobs[user['identifier']].id .. "^0)")
+			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Votre travail actuel est: ^2" .. job .. " ^0(^2" .. player_jobs[user['identifier']].id .. "^0)")
 		else
-			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Your current job is: ^2" .. job)
+			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Votre travail actuel est: ^2" .. job)
 		end
 	elseif(#args == 2)then
 		if(args[2] == "list")then
@@ -174,7 +174,7 @@ TriggerEvent('es:addCommand', 'job', function(source, args, user)
 					end
 				end)
 			else
-				TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You currently do not have a job.")
+				TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous n'avez pas de travail.")
 			end
 		else
 			TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Usage: ^2/job (JOB) (ID)")
@@ -185,11 +185,11 @@ TriggerEvent('es:addCommand', 'job', function(source, args, user)
 		else
 			if(jobs[args[2]])then
 				if(false)then
-					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Job limit reached.")
+					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Limite du métier atteinte.")
 				else
 					if(player_jobs[user.identifier])then
 						if(player_jobs[user.identifier].job == args[2])then
-							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "You already are the job ^2" .. args[2])
+							TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous avez déjà le travail : ^2" .. args[2])
 							return
 						end
 
@@ -212,7 +212,7 @@ TriggerEvent('es:addCommand', 'job', function(source, args, user)
 						jobJoined = jobs[args[2]].displayName
 					end
 
-					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Job changed to ^2" .. jobJoined .. "^0 to leave type ^2/job leave")
+					TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Vous changez de travail pour : ^2" .. jobJoined .. "^0 Pour le quitter tapez ^2/job leave")
 
 					if(jobs[args[2]].skin)then
 						TriggerClientEvent('es_roleplay:setSkin', source, jobs[args[2]].skin)
@@ -229,7 +229,7 @@ TriggerEvent('es:addCommand', 'job', function(source, args, user)
 					end
 				end
 			else
-				TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Job does not exist, use ^2/job list^0 for a list.")
+				TriggerClientEvent('chatMessage', source, "JOB", {255, 0, 0}, "Ce travail n'existe pas, tapez ^2/job list^0 pour avoir la liste.")
 			end
 		end
 	else
@@ -318,7 +318,7 @@ AddEventHandler('es_roleplay:sellVehicle', function(l)
 				end
 
 				if(chopTimer[source] < os.time())then
-					chopTimer[source] = os.time() + 900
+					chopTimer[source] = os.time() + 120
 					local pay = math.random(2000, 10000)
 
 					user:addMoney(pay)

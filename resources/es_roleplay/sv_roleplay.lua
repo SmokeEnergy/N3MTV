@@ -1,4 +1,3 @@
-local tags = uSettings.chatTags
 
 -- Settings for EssentialMode
 TriggerEvent("es:setDefaultSettings", {
@@ -14,14 +13,14 @@ end
 
 -- Default commands
 TriggerEvent('es:addCommand', 'help', function(source, args, user)
-	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commands: ^2/job^0, ^2/jc^0, ^2/cuff^0, ^2/jail^0, ^2/911")
-	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commands: ^2/unseat^0, ^2/checkplate^0, ^2/ooc^0, ^2/me")
-	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commands: ^2/ts3^0, ^2/id")
+	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commandes: ^2/job^0, ^2/jc^0, ^2/cuff^0, ^2/jail^0, ^2/911")
+	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commandes: ^2/unseat^0, ^2/checkplate^0, ^2/ooc^0, ^2/me")
+	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "Commandes: ^2/ts3^0, ^2/id")
 end)
 
 -- Default commands
-TriggerEvent('es:addCommand', 'ts3', function(source, args, user)
-	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "IP: ^3^*ts3.kanersps.pw")
+TriggerEvent('es:addCommand', 'twitch', function(source, args, user)
+	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "IP: ^3^*Twitch.tv/n3mtv")
 end)
 
 -- Default commands
@@ -41,7 +40,7 @@ TriggerEvent('es:addCommand', 'pay', function(source, args, user)
 	end
 
 	if(source == tonumber(args[2]))then
-		TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "You cannot give money to yourself.")
+		TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Vous ne pouvez pas vous donner de l'argent.")
 		return
 	end
 
@@ -56,20 +55,15 @@ TriggerEvent('es:addCommand', 'pay', function(source, args, user)
 					user:removeMoney(tonumber(args[3]))
 					target:addMoney(tonumber(args[3]))
 				else
-					TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Please get closer to the player.")
+					TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Rapprochez vous du joueur.")
 				end
 			else
-				TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Player does not exist.")
+				TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Ce joueur n'existe pas.")
 			end
 		end)
 	else
-		TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "You either don't have the money or tried an amount lower then one.")
+		TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Vous n'avez pas l'argent ou avez essayé un montant inférieur à celui-là.")
 	end
-end)
-
--- Default commands
-TriggerEvent('es:addCommand', 'ts', function(source, args, user)
-	TriggerClientEvent("chatMessage", source, "HELP", {255, 0, 0}, "IP: ^1ts3.kanersps.pw")
 end)
 
 -- 911
@@ -228,42 +222,6 @@ TriggerEvent('es:addCommand', 'ooc', function(source, args, user)
 	TriggerClientEvent('chatMessage', -1, "OOC", {100, 100, 100}, tag .. "^4^* " .. GetPlayerName(source) .. " ^4^r(^0"..source.."^4): ^r^0" .. message)
 end)
 
-AddEventHandler('chatMessage', function(source, n, message)
-	if(not startswith(message, "/"))then
-		CancelEvent()
-		TriggerEvent('es:getPlayerFromId', source, function(user)
-			local pos = user.coords
-
-			TriggerEvent('es:getPlayers', function(players)
-			for id,_ in pairs(players) do
-				if(GetPlayerName(id))then
-					TriggerEvent('es:getPlayerFromId', id, function(target)
-						if(target)then
-							local pPos = target.coords
-
-							if(user.coords and target.coords)then
-								local range = get3DDistance(pos.x, pos.y, pos.z, pPos.x, pPos.y, pPos.z)
-
-								local tag = ""
-								for k,v in ipairs(tags)do
-									if(user.permission_level >= v.rank)then
-										tag = v.tag
-									end
-								end
-
-								if(range < 30.0)then
-									TriggerClientEvent('chatMessage', id, "", {0, 0, 200}, tag .. "^4^* " .. GetPlayerName(source) .. " ^4^r(^0"..source.."^4): ^r^0" .. message)
-								end
-							end
-						end
-					end)
-
-				end
-			end
-			end)
-		end)
-	end
-end)
 
 AddEventHandler('es:invalidCommandHandler', function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1^*Unknown command^r^0, type ^2/help^0 for a list.")

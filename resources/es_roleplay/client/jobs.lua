@@ -105,16 +105,10 @@ Citizen.CreateThread(function()
 				if(Vdist(chop_shops[i].x, chop_shops[i].y, chop_shops[i].z, pos.x, pos.y, pos.z) < 50.0)then
 					DrawMarker(1, chop_shops[i].x, chop_shops[i].y, chop_shops[i].z - 1, 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 1.5001, 0, 165, 255,155, 0,0, 0,0)
 					if(Vdist(chop_shops[i].x, chop_shops[i].y, chop_shops[i].z, pos.x, pos.y, pos.z) < 3.0)then
-						if(IsPedInAnyVehicle(GetPlayerPed(-1), false))then
-							if(DecorGetInt(GetVehiclePedIsIn(GetPlayerPed(-1)), "owner") ~= false)then
-								DisplayHelpText("You cannot sell player vehicles.")
-							else
-								if(GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1)),  -1) == GetPlayerPed(-1))then
-									DisplayHelpText("Press ~INPUT_CONTEXT~ to ~y~sell~w~ this ~b~vehicle~w~.")
-									if(IsControlJustReleased(1, 38))then
-										TriggerServerEvent('es_roleplay:sellVehicle', GetVehiclePedIsIn(GetPlayerPed(), false))
-									end
-								end
+						if(GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1)),  -1) == GetPlayerPed(-1))then
+							DisplayHelpText("Press ~INPUT_CONTEXT~ to ~y~sell~w~ this ~b~vehicle~w~.")
+							if(IsControlJustReleased(1, 38))then
+								TriggerServerEvent('es_roleplay:sellVehicle', GetVehiclePedIsIn(GetPlayerPed(), false))
 							end
 						end
 					end

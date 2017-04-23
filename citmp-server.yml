@@ -5,9 +5,11 @@ PreParseResources:
 
 AutoStartResources:
     - assets
+    - essentialmode
+    - es_freeroam
+#    - sync #whitelist présente dans dossier server / ACL Config = ip admin à mettre pour whitelist à mettre steamid / ACL.maxPing = 120 (à voir)
 #    - carte
 #    - scoreboard
-    - es_freeroam
     - lscustoms
     - chat
     - spawnmanager
@@ -17,7 +19,6 @@ AutoStartResources:
     - fivem-map-skater
     - frfuel
     - pv-voip
-    - essentialmode
     - MissionText
     - TruckerJob
     - msq-directions-hud
@@ -39,8 +40,11 @@ AutoStartResources:
     - coordsaver
 #    - es_customization
     - es_miscstores
-#    - es_robberies
+    - es_robberies
 #    - es_roleplay
+    - loadingscreen
+    - inventory
+
 
 # do change
 RconPassword: monpasse
