@@ -8,8 +8,6 @@ AutoStartResources:
     - essentialmode
     - es_freeroam
 #    - sync #whitelist présente dans dossier server / ACL Config = ip admin à mettre pour whitelist à mettre steamid / ACL.maxPing = 120 (à voir)
-#    - carte
-#    - scoreboard
     - lscustoms
     - chat
     - spawnmanager
@@ -29,7 +27,7 @@ AutoStartResources:
     - es_weashop
     - es_taxi
     - pv-tow
-    - jobs
+    - Jobsui
     - paycheck
     - busdriver
     - PoliceGarage
@@ -38,19 +36,23 @@ AutoStartResources:
     - Garages
     - carhud
     - coordsaver
-#    - es_customization
     - es_miscstores
     - es_robberies
-#    - es_roleplay
     - loadingscreen
     - inventory
+    - dropw
+    - gb_savepos
+    - modif_perso
+    - mineurJOB
+    - speedcamera
+    - Enhanced-emotes
 
 
 # do change
 RconPassword: monpasse
 
 # configure this, please
-Hostname: 00 - SERVEUR SANS CONTENUE
+Hostname: 00 - SERVEUR SANS CONTENU
 
 # don't change this, it'll cause your server to be unlisted
 Game: GTA5
@@ -68,7 +70,7 @@ Announce: true
 DisableAuth: false
 
 # set to true to disable local script hook plugins
-DisableScriptHook: false
+DisableScriptHook: true
 
 # set to the path of an icon to use in the server browser. it should be square.
 ServerIcon: n3mtv.png

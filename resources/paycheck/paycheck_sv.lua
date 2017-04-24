@@ -13,6 +13,6 @@ AddEventHandler('paycheck:salary', function()
     local result = MySQL:getResults(executed_query, {'salary'})
     local salary_job = result[1].salary
   	user:addMoney((salary + salary_job))
- 	TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire reçu :  + "..salary.."~g~€~s~~n~Salaire metier reçu : + "..salary_job.." ~g~€")
+ 	TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Salaire reçu :  + "..salary.."~g~$~s~~n~Salaire metier reçu : + "..salary_job.." ~g~$")
  	end)
 end)

@@ -1,4 +1,2 @@
-client_script 'vehshop.lua'
-server_script 'vehshop_s.lua'
-
-export 'ShowVehshopBlips'
+client_script "vehshop.lua"
+client_script "vehshop_s.lua"

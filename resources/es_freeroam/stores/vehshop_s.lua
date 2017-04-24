@@ -1,41 +1,66 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open(database.host, database.name, database.username, database.password)
+MySQL:open("localhost", "gta5_gamemode_essential", "root", "monpasse")
 
 RegisterServerEvent('CheckMoneyForVeh')
+RegisterServerEvent('BuyForVeh')
+
+
 AddEventHandler('CheckMoneyForVeh', function(vehicle, price)
 	TriggerEvent('es:getPlayerFromId', source, function(user)
 
 	if (tonumber(user.money) >= tonumber(price)) then
     local player = user.identifier
-    print(player)
-			-- Pay the shop (price)
 			user:removeMoney((price))
-      -- Save this shit to the database
-      MySQL:executeQuery("UPDATE users SET personalvehicle='@vehicle' WHERE identifier = '@username'",
-      {['@username'] = player, ['@vehicle'] = vehicle})
-      -- Trigger some client stuff
-      TriggerClientEvent('FinishMoneyCheckForVeh',source)
-      TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Drive safe with this new car, this is not Carmageddon!\n")
+      TriggerClientEvent('FinishMoneyCheckForVeh',source, vehicle)
+      TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Bonne route!\n")
     else
-      -- Inform the player that he needs more money
-    TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "You dont have enough cash to buy this car!\n")
+    TriggerClientEvent("es_freeroam:notify", source, "CHAR_SIMEON", 1, "Simeon", false, "Fonds insuffisants!\n")
 	end
 end)
+end)
+
+AddEventHandler('BuyForVeh', function(vehicle, plate, primarycolor, secondarycolor)
+  TriggerEvent('es:getPlayerFromId', source, function(user)
+
+    local player = user.identifier
+    local plate = plate
+    local state = "out"
+    local primarycolor = primarycolor
+    local secondarycolor = secondarycolor
+
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+    local result = MySQL:getResults(executed_query, {'identifier'})
+
+    if(result)then
+      for k,v in ipairs(result)do
+        print(v.identifier)
+        joueur = v.identifier
+        local joueur = joueur
+       end
+    end
+    if joueur ~= nil then
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state', `vehicle_colorprimary`='@primarycolor', `vehicle_colorsecondary`='@secondarycolor' WHERE identifier = '@username'",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
+    else
+      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
+    end
+  end)
 end)
 
 -- Spawn the personal vehicle
 TriggerEvent('es:addCommand', 'pv', function(source, user)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-    local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@username'",{['@username'] = player})
-  	local result = MySQL:getResults(executed_query, {'personalvehicle'})
+    local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
+  	local result = MySQL:getResults(executed_query, {'vehicle_model'})
 
     if(result)then
 		for k,v in ipairs(result)do
-      print(v.personalvehicle)
-      vehicle = v.personalvehicle
+      print(v.vehicle_model)
+      vehicle = v.vehicle_model
+      end
     end
-  end
 
   	TriggerClientEvent('vehshop:spawnVehicle', source, vehicle)
   end)

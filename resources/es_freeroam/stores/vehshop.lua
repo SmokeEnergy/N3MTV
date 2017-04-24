@@ -1,6 +1,6 @@
 local vehshop = {
 	opened = false,
-	title = "Concessionnaire",
+	title = "Vehicle Shop",
 	currentmenu = "main",
 	lastmenu = nil,
 	currentpos = nil,
@@ -318,7 +318,7 @@ function ShowVehshopBlips(bool)
 			-- 60 58 137
 			SetBlipSprite(blip,326)
 			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString('Vehicle shop')
+			AddTextComponentString('Concessionnaire')
 			EndTextCommandSetBlipName(blip)
 			SetBlipAsShortRange(blip,true)
 			SetBlipAsMissionCreatorBlip(blip,true)
@@ -329,9 +329,9 @@ function ShowVehshopBlips(bool)
 				Citizen.Wait(0)
 				local inrange = false
 				for i,b in ipairs(vehshop_blips) do
-					if IsPlayerWantedLevelGreater(GetPlayerIndex(),0) == false and vehshop.opened == false and IsPedInAnyVehicle(LocalPed(), true) == false and  GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 5 then
-						DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-						drawTxt('Press ~g~ENTER~s~ to buy ~b~vehicle',0,1,0.5,0.8,0.6,255,255,255,255)
+					DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+					if vehshop.opened == false and IsPedInAnyVehicle(LocalPed(), true) == false and  GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 5 then		
+						drawTxt('Appuyer sur ~g~Entrée~s~ pour accéder au menu d\'achat',0,1,0.5,0.8,0.6,255,255,255,255)
 						currentlocation = b
 						inrange = true
 					end
@@ -394,7 +394,7 @@ function OpenCreator()
 	end)]]
 end
 local vehicle_price = 0
-function CloseCreator()
+function CloseCreator(veh)
 	Citizen.CreateThread(function()
 		local ped = LocalPed()
 		if not boughtcar then
@@ -403,6 +403,7 @@ function CloseCreator()
 			FreezeEntityPosition(ped,false)
 			SetEntityVisible(ped,true)
 		else
+			local vehicle = veh
 			local veh = GetVehiclePedIsUsing(ped)
 			local model = GetEntityModel(veh)
 			local colors = table.pack(GetVehicleColours(veh))
@@ -427,22 +428,18 @@ function CloseCreator()
 				SetVehicleMod(personalvehicle,i,mod)
 			end
 			SetVehicleOnGroundProperly(personalvehicle)
+			local plate = GetVehicleNumberPlateText(personalvehicle)
 			SetVehicleHasBeenOwnedByPlayer(personalvehicle,true)
 			local id = NetworkGetNetworkIdFromEntity(personalvehicle)
 			SetNetworkIdCanMigrate(id, true)
 			Citizen.InvokeNative(0x629BFA74418D6239,Citizen.PointerValueIntInitialized(personalvehicle))
 			SetVehicleColours(personalvehicle,colors[1],colors[2])
 			SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
-			--local blip = AddBlipForEntity(personalvehicle)
-			--SetBlipSprite(blip,326)
-			--BeginTextCommandSetBlipName("STRING")
-			--AddTextComponentString('Personal vehicle')
-			--EndTextCommandSetBlipName(blip)
-			--personalvehicle_blip = blip
 			TaskWarpPedIntoVehicle(GetPlayerPed(-1),personalvehicle,-1)
-			SetEntityVisible(ped,true)
-
-
+			SetEntityVisible(ped,true)			
+			local primaryColor = colors[1]
+			local secondaryColor = colors[2]
+			TriggerServerEvent('BuyForVeh', vehicle, plate, primaryColor, secondaryColor)
 		end
 		vehshop.opened = false
 		vehshop.menu.from = 1
@@ -512,15 +509,17 @@ local menu = vehshop.menu
 	DrawRect(x,y,menu.width,menu.height,0,0,0,150)
 	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)
 end
+
 function tablelength(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
   return count
 end
+
 function Notify(text)
-SetNotificationTextEntry('STRING')
-AddTextComponentString(text)
-DrawNotification(false, false)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentString(text)
+	DrawNotification(false, false)
 end
 
 function DoesPlayerHaveVehicle(model,button,y,selected)
@@ -685,9 +684,10 @@ function ButtonSelected(button)
 end
 
 RegisterNetEvent('FinishMoneyCheckForVeh')
-AddEventHandler('FinishMoneyCheckForVeh', function()
+AddEventHandler('FinishMoneyCheckForVeh', function(vehicle)
+	local vehicle = vehicle
 	boughtcar = true
-	CloseCreator()
+	CloseCreator(vehicle)
 end)
 
 function OpenMenu(menu)

@@ -16,7 +16,7 @@ client_scripts {
   'player/map.lua',
   'player/scoreboard.lua',
   'stores/stripclub.lua',
-  'stores/vehshop.lua'
+  'stores/vehshop.lua',
 }
 
 server_scripts {
